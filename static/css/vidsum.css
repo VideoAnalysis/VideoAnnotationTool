@@ -1,0 +1,50 @@
+:root {
+  --vid_width: 80%;
+}
+.container {
+	min-width: 1000px !important;
+}
+div.vert_scroll {
+  width: 400px;
+  height: 800px;
+  overflow: scroll;
+}
+table,td {
+  border: 1px solid black;
+}
+
+.table_width{
+	width:var(--vid_width);
+	height:100px;
+}
+
+.table_curr_play{
+	width:var(--vid_width);
+	height:15px;
+}
+
+.cell_graph_bg{
+	background-color:green;
+}
+
+.cell_graph_time{
+	background-color:crimson;
+}
+
+.heat_canvas{
+  	width:  100%;
+  	height: 25%;
+	border:1px solid #d3d3d3;
+}
+.main_video_div{
+	padding-left:80px;
+}
+
+.video_controll{
+	width:var(--vid_width);
+}
+
+.video_implevel{
+	width:15px;
+}
+
