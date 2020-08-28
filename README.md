@@ -8,7 +8,7 @@ Python version >= 3.6
 ```
 @article{ghauri2020eduvsum, 
    title={Classification of Important Segments in Educational Videos using Multimodal Features},
-   author={Ghauri, Junaid Ahmed and Hakimo, Sherzod and Ewerth, Ralph}, 
+   author={Ghauri, Junaid Ahmed and Hakimov, Sherzod and Ewerth, Ralph}, 
    Conference={International Workshop on Investigating Learning During Web Search (IWILDS 2020)}, 
    year={2020} 
 }
