@@ -9,10 +9,12 @@ import cv2
 import pickle
 
 
+# http://127.0.0.1:5000/videoanalysis/getmain?name=junaid
+
 from flask import send_from_directory
 
 baseWeb="/videoanalysis"
-usersArr=["junaid","Sherzod","Haris","test_user1"] # list(userDict.keys())
+usersArr=["junaid","test_user1"] # list(userDict.keys())
 
 @app.route(baseWeb+'/static/<path:path>')
 def send_js(path):
@@ -60,8 +62,9 @@ def getListOfVideos():
     print("request args dataDict: ",dataDict)
     userDict=pickle.load(open("video_dict_vidsum.p","rb"))
     videoNames=json.load(open("videoNames.json","r"))
+    config=json.load(open("config.json","r"))
     if request.method == 'POST':
-         response = {"video_dict":pickle.load(open("video_dict_vidsum.p","rb")),"usersArr":usersArr,"vidUserLs":pickle.load(open("videoAnnotate.p","rb")),"videoNames":videoNames}
+         response = {"video_dict":pickle.load(open("video_dict_vidsum.p","rb")),"usersArr":usersArr,"vidUserLs":pickle.load(open("videoAnnotate.p","rb")),"videoNames":videoNames,"impLevel":config["impLevel"],"subtitles":config["subtitles"]}
          print("video dictionary loaded...")
          return json.dumps(response)
      
@@ -96,9 +99,3 @@ def saveAnnotation():
 def printMyName():
     print("JUNAID")
 
-#dictLoaded=pickle.load(open("videoAnnotate.p","rb"))
-##dictLoaded["junaid"]={}
-#dictLoaded["au_sherzod"]={}
-#dictLoaded["au_tu1"]={}
-#dictLoaded["vidUserLs"]={}
-#pickle.dump(dictLoaded,open("videoAnnotate.p","wb"))

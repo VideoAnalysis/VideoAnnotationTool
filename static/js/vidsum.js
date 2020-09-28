@@ -10,12 +10,13 @@ var vidsum=(function (){
 	var currentVideo="";
 	var tempCols=45;
 	var impLevel=10;
+	var subtitles=0;
 	var usersArr=[];
 	var currentUser="";
 	var vidUserLs=[];
 	var segmentSize=5;
 	var init=function(){
-		vidsum.sampleAjax();
+		vidsum.lodingDataAjax();
 		//vidsum.loadDictionaries();
 		
 		/*$("#slider").slideReveal({
@@ -139,6 +140,10 @@ var vidsum=(function (){
 		//$('.cell_click').hover(hoverOrClick).click(hoverOrClick);
 
 		$("#submit").off().on( "click", function(obj) {
+		debugger;
+    		if(currentVideo.indexOf(".mp4")<0){
+        		currentVideo=currentVideo+".mp4"
+    		}
 					$.ajax({
 				    url : "saveAnnotation",
 				    type : "POST",
@@ -223,15 +228,18 @@ var vidsum=(function (){
 		}
 	};
 
-	var sampleAjax=function(){
+	var lodingDataAjax=function(){
 		$.ajax({
 		    url : "getListOfVideos",
 		    type : "POST",
 		    data : JSON.stringify({creatorName:$("#creatorInput").val()}),
 		    dataType:"json",
 		    success : function(data) {
+		    debugger;
 	    		vidsum.video_dict=data.video_dict;
 	    		vidsum.videoNames=data.videoNames;
+	    		impLevel=data.impLevel;
+	    		subtitles=data.subtitles;
 	    		var firstVid=""
 	    		for(var k in data.video_dict){
 	    			$(".video_pane").append(getThumbVideoPlaceHolder(k,data.video_dict[k]));
@@ -243,10 +251,14 @@ var vidsum=(function (){
 	    			}
 	    		}
 	    		vidsum.bindpageEvents();
+	    		debugger;
 				$("#main_video").attr("src",videDataBase+firstVid);
 				//currentVideo=firstVid.split(".")[0];
 				currentVideo=firstVid.slice(0,firstVid.indexOf(".",firstVid.length-4));
-				$("#main_video").children()[1].src=videDataBase+"en_"+currentVideo+".vtt";
+				if(subtitles){
+        				$("#main_video").children()[1].src=videDataBase+"en_"+currentVideo+".vtt";
+				}
+				
 				if(currentVideo in vidsum.videoNames){
     				$("#current_video").val(vidsum.videoNames[currentVideo]);
     				$("#current_vid_span").html(vidsum.videoNames[currentVideo]);
@@ -259,6 +271,8 @@ var vidsum=(function (){
 				vidsum.fillTheGraph(vidsum.video_dict[firstVid].scores);
 				vidsum.buildCurrentPlayGrid(vidsum.video_dict[firstVid].scores.length); 
 				usersArr=data.usersArr; 
+				//impLevel=data.video_dict[k].impLevel;
+				tempCols=vidsum.video_dict[firstVid].scores.length;
 				vidsum.pagePostOperation();
 				markUserVideos(data.vidUserLs);
 				$("#video_done").val(Object.keys(data.vidUserLs[currentUser]).length+" / "+Object.keys(data.video_dict).length);
@@ -275,6 +289,7 @@ var vidsum=(function (){
         		vidUserLs=data.vidUserLs;	
         		var timeIndicator = setInterval(vidsum.startTimeIndicator, 1000);
 		        //alert('Data: '+data);
+		        //location.reload();
     		    },
 		    error : function(request,error){
 		        alert("Request: "+JSON.stringify(request));
@@ -286,7 +301,7 @@ var vidsum=(function (){
 		init:init,
 		loadDictionaries:loadDictionaries,
 		bindpageEvents:bindpageEvents,
-		sampleAjax:sampleAjax,
+		lodingDataAjax:lodingDataAjax,
 		video_dict:video_dict,
 		videoNames:videoNames,
 		buildImpGrid:buildImpGrid,
