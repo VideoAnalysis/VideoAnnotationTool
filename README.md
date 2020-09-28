@@ -4,7 +4,7 @@ Video Annotation Tool (VAT) is a web based tool to annotate videos datasets to u
 ## Get started (Requirements and Setup)
 Python version >= 3.6
 
-## TO install dependencies
+## To install dependencies
 ``` bash
 pip install -r requirements.txt
 ```
