@@ -12,6 +12,7 @@ pip install -r requirements.txt
 ## Video placement and preprocessing 
 Put your video in "\static\videodata" folder and  generate thumbnails and other necessary files using "preprocessingCode.py"
 
+
 ## Citation
 ```
 @article{ghauri2020eduvsum, 
